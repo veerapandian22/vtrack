@@ -1,0 +1,18 @@
+{% include "web/header.html" %}
+{% include "web/menubar.html" %}
+{% load static %}
+<div id="content">
+  <div id="content-header">
+    <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a></div>
+  </div>
+  <div class="container-fluid">
+   	<div class="quick-actions_homepage">
+    <ul class="quick-actions">
+          <li> <a href="{% url 'stat' %}" style="color:Blue"> <i class="icon-dashboard"></i> Statics </a> </li>
+          <li> <a href="#" style="color:Blue"> <i class="icon-web"></i> Online: {{ online }} </a> </li>
+          <li > <a href="#" style="color:Blue"> <i class="icon-people"></i> Users Count: {{ count }}</a> </li>
+        </ul>
+    </div>
+  </div>
+</div>
+{% include "web/footer.html" %}

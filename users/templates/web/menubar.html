@@ -1,0 +1,10 @@
+<div id="sidebar"><a href="#" class="visible-phone"><i class="icon icon-home"></i> Dashboard</a><ul>
+    <li class="active"><a href="{% url 'dashboard' %}"><i class="icon icon-home"></i> <span>Dashboard</span></a> </li>
+    <li class="submenu"> <a href="#"><i class="icon-user"></i> <span>Admin</span></a>
+      <ul>
+        <li><a href="{% url 'list_user' %}"><i class="icon-user"></i><span>Users</span></a></li>
+        <li><a href="{% url 'list_roles' %}"><i class="icon-th"></i><span>Roles</span></a></li>
+      </ul>
+    </li>
+  </ul>
+</div>
