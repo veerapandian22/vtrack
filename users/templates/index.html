@@ -2,17 +2,70 @@
 {% include "web/menubar.html" %}
 {% load static %}
 <div id="content">
-  <div id="content-header">
+    <div id="content-header">
     <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a></div>
-  </div>
-  <div class="container-fluid">
-   	<div class="quick-actions_homepage">
+    </div>
+    <div class="container-fluid">
+    <div class="quick-actions_homepage">
     <ul class="quick-actions">
           <li> <a href="{% url 'stat' %}" style="color:Blue"> <i class="icon-dashboard"></i> Statics </a> </li>
           <li> <a href="#" style="color:Blue"> <i class="icon-web"></i> Online: {{ online }} </a> </li>
           <li > <a href="#" style="color:Blue"> <i class="icon-people"></i> Users Count: {{ count }}</a> </li>
         </ul>
     </div>
-  </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="widget-box">
+        <div class="widget-title"><span class="icon"><i class="icon-tasks"></i></span>
+          <h5>Analytics</h5>
+          <div class="buttons"><a href="{% url 'index' %}" class="btn btn-mini btn-success"><i class="icon-refresh"></i> Update stats</a></div>
+        </div>
+        <div class="widget-content">
+          <div class="row-fluid">
+            <div class="span8">
+
+                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                <script type="text/javascript">
+                  google.charts.load('current', {'packages':['corechart']});
+                  google.charts.setOnLoadCallback(drawChart);
+
+                  function drawChart() {
+                    var data = google.visualization.arrayToDataTable([
+                      ['Grade', 'No of heat'],
+                      ['GR025 304L',  1066],
+                      ['GR026 304L',  11193],
+                      ['GR027 304L',  2275],
+                      ['GR028 304L',  5121],
+                      ['GR029 304L',  2299],
+                      ['GR030 304L',  2299],
+                      ['GR031 304L',  2299],
+                      ['GR032 304L',  2299],
+                      ['GR033 304L',  2299],
+                      ['GR034 304L',  2299],
+                      ['GR035 304L',  2299],
+                    ]);
+
+                    var options = {
+                      title: 'Grade wise - No Of Heats Planned',
+                      curveType: 'function',
+                      legend: { position: 'bottom' }
+                    };
+
+                    var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+                    chart.draw(data, options);
+                  }
+                </script>
+                 <body>
+                    <div id="curve_chart" style="width: 1500px; height: 400px"></div>
+                 </body>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
 </div>
 {% include "web/footer.html" %}

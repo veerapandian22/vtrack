@@ -107,39 +107,22 @@ def edit_user(request):
         groups = Group.objects.all()
         return render(request, 'users/edit_user.html', {"user": user, "groups": groups})
 
-def convert_header(csvHeader):
-    header_ = csvHeader[0]
-    cols = [x.replace(' ', '_').lower() for x in header_.split(",")]
-    return cols
-
 def bulk_import(request):
     if request.method == 'POST':
-        csv_file = request.FILES['file']
-
-        if not csv_file.name.endswith('.csv'):
-            return render(request, 'users/bulk_import.html', {'message': 'Invalid CSV file'})
-
-        decoded_file = csv_file.read().decode('UTF-8')
-        io_string = io.StringIO(decoded_file)
-        reader = csv.reader(io_string, delimiter=';', quotechar='|')
-        header_ = next(reader)
-        header_cols = convert_header(header_)
-
-        parsed_items = []
-        for line in reader:
-            i = 0
-            row_item = line[0].split(',')
-            for item in row_item:
-                parsed_items.append(item)
-
-            User.objects.create(password=get_random_string(length=16),
-                                is_superuser=parsed_items[5],
-                                username=parsed_items[0],
-                                first_name=parsed_items[2],
-                                last_name=parsed_items[3],
-                                email=parsed_items[1],
+        file = request.FILES['file']
+        decoded_file = file.read().decode('utf-8').splitlines()
+        reader = csv.DictReader(decoded_file)
+        for row in reader:
+            password = get_random_string(length=16)
+            User.objects.create(password=make_password(password),
+                                pwd=password,
+                                is_superuser=row['is_superuser'],
+                                username=row['username'],
+                                first_name=row['first_name'],
+                                last_name=row['last_name'],
+                                email=row['email'],
                                 is_staff=1,
-                                is_active=parsed_items[4])
+                                is_active=row['is_active'])
         return render(request, 'users/bulk_import.html', {'message': 'Successfully CSV imported'})
     else:
         return render(request, 'users/bulk_import.html')

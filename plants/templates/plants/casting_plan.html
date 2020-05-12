@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+<title>VTrack Admin</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+<link rel="stylesheet" href="{% static 'css/bootstrap-responsive.min.css' %}" />
+<link rel="stylesheet" href="{% static 'css/uniform.css' %}" />
+<link rel="stylesheet" href="{% static 'css/select2.css' %}" />
+<link rel="stylesheet" href="{% static 'css/maruti-style.css' %}" />
+<link rel="stylesheet" href="{% static 'css/maruti-media.css' %}" class="skin-color" />
+</head>
+<body>
+{% include "web/header.html" %}
+{% include "web/menubar.html" %}
+<div id="content">
+  <div id="content-header">
+    <div id="breadcrumb"> <a href="{% url 'index' %}" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a>
+        <a href="#" class="current">Casting Plan Details</a> </div>
+      {% if message %}
+        <i class="message pull-right" style="color:green">{{ message }}</i>
+      {% endif %}
+    <h1>Casting Plan Details</h1>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="widget-box">
+          <div class="widget-title">
+             <span class="icon"><i class="icon-th"></i></span>
+            <h5>Casting Plan</h5>
+          </div>
+          <div class="widget-content nopadding">
+            <table class="table table-bordered data-table">
+              <thead>
+                <tr>
+                    <th>PlanningNumber</th>
+                    <th>PlanningDate</th>
+                    <th>CastingPlanNo</th>
+                    <th>CustomerName</th>
+                    <th>GradeGroup</th>
+                    <th>NoOfHeat</th>
+                    <th>Status</th>
+                    <th>CastingPlanLineNo</th>
+                    <th>DemandUID</th>
+                    <th>GRADE</th>
+                    <th>ItemNumber</th>
+                    <th>Action</th>
+
+                </tr>
+              </thead>
+              <tbody>
+              {% if CastingPlans %}
+                  {% for CastingPlan in CastingPlans %}
+                  <tr class="gradeX">
+                      <td>{{ CastingPlan.CP_PlanningNumber }}</td>
+                      <td>{{ CastingPlan.CP_PlanningDate }}</td>
+                      <td>{{ CastingPlan.CP_CastingPlanNo }}</td>
+                      <td>{{ CastingPlan.CP_CustomerName }}</td>
+                      <td>{{ CastingPlan.CP_GradeGroup }}</td>
+                      <td>{{ CastingPlan.CP_NoOfHeat }}</td>
+                      <td>{{ CastingPlan.CP_Status }}</td>
+                      <td>{{ CastingPlan.CP_CastingPlanLineNo }}</td>
+                      <td>{{ CastingPlan.CP_DemandUID }}</td>
+                      <td>{{ CastingPlan.CP_GRADE }}</td>
+                      <td>{{ CastingPlan.CP_ItemNumber }}</td>
+                      <td>
+                          <a href=""><i class="icon-eye-open"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                          <a href=""><i class="icon-trash"></i></a>
+                      </td>
+                  </tr>
+                  {% endfor %}
+              {% else %}
+              <tr class="gradeX">
+                      <td style="text-align: center;">-</td>
+                      <td style="text-align: center;">-</td>
+                      <td style="text-align: center;">-</td>
+                      <td style="text-align: center;">-</td>
+                      <td style="text-align: center;">-</td>
+                      <td style="text-align: center;">-</td>
+                      <td style="text-align: center;">-</td>
+                      <td style="text-align: center;">-</td>
+                      <td style="text-align: center;">-</td>
+                      <td style="text-align: center;">-</td>
+              </tr>
+              {% endif %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+{% include "web/footer.html" %}
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/jquery.ui.custom.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery.uniform.js' %}"></script>
+<script src="{% static 'js/select2.min.js' %}"></script>
+<script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'js/maruti.js' %}"></script>
+<script src="{% static 'js/maruti.tables.js' %}"></script>
+<script>
+    $(document).ready(function() {
+        // messages timeout for 10 sec
+        setTimeout(function() {
+            $('.message').fadeOut('slow');
+        }, 2000); // <-- time in milliseconds, 1000 =  1 sec
+
+        // delete message
+        $('.del-msg').live('click',function(){
+            $('.del-msg').parent().attr('style', 'display:none;');
+        })
+    });
+</script>
+</body>
+</html>
